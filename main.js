@@ -17,10 +17,11 @@ function drawGrid() {
 // Iteration 2: Class Character
 
 class Character {
-  constructor(name, col, row) {
+  constructor(name, col, row, direction = 'down') {
     this.name = name;
     this.col = col;
     this.row = row;
+    this.direction = direction;
   }
 
   moveUp() {
@@ -31,7 +32,7 @@ class Character {
   }
   moveDown() {
     this.direction = 'down';
-    if (this.row < 11) {
+    if (this.row < 10) {
       this.row++;
     }
   }
@@ -43,31 +44,53 @@ class Character {
   }
   moveRight() {
     this.direction = 'right';
-    if (this.col < 11) {
+    if (this.col < 10) {
       this.col++;
     }
   }
 }
 
 let player1 = new Character('newPlayer', 0, 0);
+console.log(player1);
+console.log(player1);
+player1.moveRight();
+player1.moveRight();
+player1.moveRight();
+player1.moveRight();
+player1.moveRight();
+player1.moveRight();
 
 // Iteration 3: Drawing the player
 
 function drawPlayer() {
-  let imgDown = '/images/character-down.png';
-  let imgLeft = '/images/character-left.png';
-  let imgRight = '/images/character-right.png';
-  let imgUp = '/images/character-up.png';
-  // Switch function here
-  let viking = new Image();
-  let vikingCol = player1.col * 50;
-  let vikingRow = player1.row * 50;
+/*
+    let imageDown = '/images/character-down.png';
+  let imageLeft = '/images/character-left.png';
+  let imageRight = '/images/character-right.png';
+  let imageUp = '/images/character-up.png';
+  let currentDirection;
+  switch (player1.currentDirection) {
+    case 'down':
+      currentDirection = imageDown;
+      break;
+    case 'left':
+      currentDirection = imageLeft;
+      break;
+    case 'up':
+      currentDirection = imageUp;
+      break;
+    case 'right':
+      currentDirection = imageRight;
+      break;
+  }
+  // it's not working, why?
+*/
 
-  viking.src = '/images/character-down.png'; // will be replaced by the direction given by the switch function
-  imgScale = 30 / 30;
-  viking.onload = function () {
-    context.drawImage(viking, vikingCol, vikingRow, 50 * imgScale, 50);
-  };
+  let viking = new Image();
+  viking.src = "/images/character-down.png";
+  viking.addEventListener('load', () => {
+    context.drawImage(viking, player1.col * 50, player1.row * 50);
+  });
 }
 
 // Iteration 4: the treasure
@@ -88,7 +111,6 @@ class Treasure {
 
 let bigTreasure = new Treasure(0, 0);
 bigTreasure.setRandomPosition();
-console.log(bigTreasure);
 
 function drawTreasure() {
   let diamants = new Image();
@@ -101,6 +123,13 @@ function drawTreasure() {
   };
 }
 
+function drawEverything() {
+  drawGrid();
+  drawPlayer();
+  drawTreasure();
+}
+
+drawEverything();
 // Iteration 5: React to player input
 
 window.addEventListener('keydown', (event) => {
@@ -110,24 +139,17 @@ window.addEventListener('keydown', (event) => {
   // React based on the key pressed
   switch (event.keyCode) {
     case 37:
-      console.log('left');
+      player1.moveLeft();
       break;
     case 38:
-      console.log('up');
+      player1.moveUp();
       break;
     case 39:
-      console.log('right');
+      player1.moveRight();
       break;
     case 40:
-      console.log('down');
+      player1.moveDown();
       break;
   }
+  drawEverything();
 });
-
-function drawEverything() {
-  drawGrid();
-  drawPlayer();
-  drawTreasure();
-}
-
-drawEverything();
