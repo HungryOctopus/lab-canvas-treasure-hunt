@@ -24,21 +24,25 @@ class Character {
   }
 
   moveUp() {
+    this.direction = 'up';
     if (this.row > 0) {
       this.row--;
     }
   }
   moveDown() {
+    this.direction = 'down';
     if (this.row < 11) {
       this.row++;
     }
   }
   moveLeft() {
+    this.direction = 'left';
     if (this.col > 0) {
       this.col--;
     }
   }
   moveRight() {
+    this.direction = 'right';
     if (this.col < 11) {
       this.col++;
     }
@@ -46,10 +50,6 @@ class Character {
 }
 
 let player1 = new Character('newPlayer', 0, 0);
-
-console.log(player1);
-player1.moveDown();
-console.log(player1.row);
 
 // Iteration 3: Drawing the player
 
@@ -80,8 +80,8 @@ class Treasure {
 
   setRandomPosition() {
     if (0 < this.row < 11 && 0 < this.col < 11) {
-      this.col = Math.ceil(Math.random() * 10);
-      this.row = Math.ceil(Math.random() * 10);
+      this.col = Math.ceil(Math.random() * 10) - 1;
+      this.row = Math.ceil(Math.random() * 10) - 1;
     }
   }
 }
@@ -100,6 +100,29 @@ function drawTreasure() {
     context.drawImage(diamants, diamantCol, diamantRow, 50 * imgScale, 50);
   };
 }
+
+// Iteration 5: React to player input
+
+window.addEventListener('keydown', (event) => {
+  // Stop the default behavior (moving the screen to the left/up/right/down)
+  event.preventDefault();
+
+  // React based on the key pressed
+  switch (event.keyCode) {
+    case 37:
+      console.log('left');
+      break;
+    case 38:
+      console.log('up');
+      break;
+    case 39:
+      console.log('right');
+      break;
+    case 40:
+      console.log('down');
+      break;
+  }
+});
 
 function drawEverything() {
   drawGrid();
