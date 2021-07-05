@@ -51,19 +51,11 @@ class Character {
 }
 
 let player1 = new Character('newPlayer', 0, 0);
-console.log(player1);
-console.log(player1);
-player1.moveRight();
-player1.moveRight();
-player1.moveRight();
-player1.moveRight();
-player1.moveRight();
-player1.moveRight();
 
 // Iteration 3: Drawing the player
 
 function drawPlayer() {
-/*
+  /*
     let imageDown = '/images/character-down.png';
   let imageLeft = '/images/character-left.png';
   let imageRight = '/images/character-right.png';
@@ -87,7 +79,7 @@ function drawPlayer() {
 */
 
   let viking = new Image();
-  viking.src = "/images/character-down.png";
+  viking.src = '/images/character-down.png';
   viking.addEventListener('load', () => {
     context.drawImage(viking, player1.col * 50, player1.row * 50);
   });
@@ -124,10 +116,18 @@ function drawTreasure() {
 }
 
 function drawEverything() {
+  context.clearRect(0, 0, width, height);
   drawGrid();
   drawPlayer();
   drawTreasure();
 }
+/* also not working...
+function newGame(player1, bigTreasure) {
+  if (player1.row === bigTreasure.row && player1.col === bigTreasure.col) {
+    bigTreasure.setRandomPosition();
+  } 
+}
+*/
 
 drawEverything();
 // Iteration 5: React to player input
